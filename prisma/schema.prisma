@@ -82,4 +82,5 @@ model Service {
   price        Decimal    @db.Decimal(10, 2)
   imageUrl     String
   bookings     Booking[]
+  
 }
