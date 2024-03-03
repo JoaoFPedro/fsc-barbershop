@@ -1,8 +1,8 @@
 "use client"
 
 import { SheetHeader, SheetTitle } from "./ui/sheet";
-import { Avatar } from "./ui/avatar";
-import { AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarImage } from "./ui/avatar";
+
 import { Button } from "./ui/button";
 import { HomeIcon,  LogInIcon, LogOutIcon, UserIcon } from "lucide-react";
 import { useSession, signOut, signIn } from "next-auth/react";

@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={`${inter.className} dark`}>
       <AuthProvider>
         <div className="flex-1">
-    {children}
+         {children}
         </div>
       <Footer />
       </AuthProvider>
