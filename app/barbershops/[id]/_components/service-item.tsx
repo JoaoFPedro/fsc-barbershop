@@ -168,7 +168,7 @@ const ServiceItem = ({
                     </Card>
                   </div>
                   <SheetFooter className="px-5">
-                    <Button>Confirmar Reserva</Button>
+                    <Button disabled={!hour || !date}>Confirmar Reserva</Button>
                   </SheetFooter>
                 </SheetContent>
               </Sheet>
