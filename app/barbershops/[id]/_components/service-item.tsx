@@ -21,6 +21,10 @@ import { generateDayTimeList } from "../_helpers/hours";
 import { format, setHours, setMinutes } from "date-fns";
 import { saveBooking } from "../_actions/save-booking";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+
+
+
 
 
 interface ServiceItemProps {
@@ -39,6 +43,7 @@ const ServiceItem = ({
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [hour, setHour] = useState<string | undefined>();
   const [submitIsLoading, setSubmitIsLoading] = useState(false);
+  const [sheetIsOpen, setSheetIsOpen] = useState(false);
   
 
   const handleHourClick = (time: string) => {
@@ -74,10 +79,23 @@ const ServiceItem = ({
         barbershopId: barbershop.id,
         date: newDate,
         userId: (data.user as any).id,
-      })
+      });
 
 
-      
+      setSheetIsOpen(false);
+      setHour(undefined);
+      setDate(undefined);
+      toast("Reserva realizada com sucesso!", {
+        description: format(newDate, "'Para' dd 'de' MMMM 'às' HH':'mm'.'", {
+          locale: ptBR,
+        }),
+        action: {
+          label: "Visualizar",
+          onClick: () => console.log("Undo")
+        },
+      });
+
+
     } catch (error) {
       console.log(error)
     } finally {
@@ -112,7 +130,7 @@ const ServiceItem = ({
               <p className="text-primary font-bold ">
                 R${Number(service.price)}
               </p>
-              <Sheet>
+              <Sheet open={sheetIsOpen} onOpenChange={setSheetIsOpen}>
                 <SheetTrigger asChild>
                   <Button variant="secondary" onClick={handleBookingClick}>
                     Reservar
@@ -219,3 +237,6 @@ const ServiceItem = ({
 };
 
 export default ServiceItem;
+
+
+
