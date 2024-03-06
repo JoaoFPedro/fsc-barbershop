@@ -20,6 +20,7 @@ import { useState } from "react";
 import { generateDayTimeList } from "../_helpers/hours";
 import { format, setHours, setMinutes } from "date-fns";
 import { saveBooking } from "../_actions/save-booking";
+import { Loader2 } from "lucide-react";
 
 
 interface ServiceItemProps {
@@ -37,6 +38,8 @@ const ServiceItem = ({
 
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [hour, setHour] = useState<string | undefined>();
+  const [submitIsLoading, setSubmitIsLoading] = useState(false);
+  
 
   const handleHourClick = (time: string) => {
     setHour(time);
@@ -55,6 +58,7 @@ const ServiceItem = ({
   };
 
   const handleBookingSubmit = async () =>{
+    setSubmitIsLoading(true);  
     try {
       if(!hour || !date || !data?.user){
         return
@@ -76,6 +80,8 @@ const ServiceItem = ({
       
     } catch (error) {
       console.log(error)
+    } finally {
+      setSubmitIsLoading(false);
     }
   }
 
@@ -198,7 +204,9 @@ const ServiceItem = ({
                     </Card>
                   </div>
                   <SheetFooter className="px-5">
-                    <Button onClick={handleBookingSubmit} disabled={!hour || !date}>Confirmar Reserva</Button>
+                    <Button onClick={handleBookingSubmit} disabled={!hour || !date || submitIsLoading}>
+                      {submitIsLoading && <Loader2 className="mr-2 h4 w-4 animate-spin "/>}
+                      Confirmar Reserva</Button>
                   </SheetFooter>
                 </SheetContent>
               </Sheet>
