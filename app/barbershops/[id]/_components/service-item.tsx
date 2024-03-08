@@ -91,7 +91,7 @@ const ServiceItem = ({
         }),
         action: {
           label: "Visualizar",
-          onClick: () => console.log("Undo")
+          onClick: () => console.log("Desfazer")
         },
       });
 
