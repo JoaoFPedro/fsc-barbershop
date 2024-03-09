@@ -22,6 +22,7 @@ import { format, setHours, setMinutes } from "date-fns";
 import { saveBooking } from "../_actions/save-booking";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 
 
@@ -38,6 +39,7 @@ const ServiceItem = ({
   isAuthenticated,
   barbershop,
 }: ServiceItemProps) => {
+  const router = useRouter()
   const {data} = useSession();
 
   const [date, setDate] = useState<Date | undefined>(undefined);
@@ -91,7 +93,7 @@ const ServiceItem = ({
         }),
         action: {
           label: "Visualizar",
-          onClick: () => console.log("Desfazer")
+          onClick: () => router.push("/bookings"),
         },
       });
 
@@ -107,6 +109,8 @@ const ServiceItem = ({
   const timeList = useMemo(() => {
     return date ? generateDayTimeList(date) : [];
   }, [date]);
+
+
 
   return (
     <Card>
