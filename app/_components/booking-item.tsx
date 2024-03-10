@@ -1,9 +1,23 @@
 
+import { Booking, Prisma } from "@prisma/client";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import { Card, CardContent } from "./ui/card";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
-const BookingItem = () => {
+
+
+interface BookingItemProps{
+  booking: Prisma.BookingGetPayload<{
+    include: {
+      service: true
+      barbershop: true
+    }
+  }>;
+}
+
+const BookingItem = ({booking}: BookingItemProps) => {
   return (
     <Card>
       <CardContent className="p-5 flex justify-between py-0">
@@ -12,22 +26,26 @@ const BookingItem = () => {
             {" "}
             Confirmado
           </Badge>
-          <h2 className="font-bold"> Hair Cut</h2>
+          <h2 className="font-bold"> {booking.service.name}</h2>
 
           <div className="flex items-center gap-2 ">
             <Avatar>
-              <AvatarImage src="https://utfs.io/f/8a457cda-f768-411d-a737-cdb23ca6b9b5-b3pegf.png" />
+              <AvatarImage src={booking.barbershop.imageUrl} />
 
               <AvatarFallback >A</AvatarFallback>
             </Avatar>
 
-            <h3 className="text-sm">Vintage Barber</h3>
+            <h3 className="text-sm">{booking.barbershop.name}</h3>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center px-3 border-solid border-l border-secondary">
-            <p className="text-sm"> Fevereiro</p>
-            <p className="text-2xl">06</p>
-            <p className="text-sm">09:45</p>
+        <p className="text-sm capitalize">
+                {format(booking.date, "MMMM", {
+                  locale: ptBR,
+                })}
+              </p>
+            <p className="text-2xl">{format(booking.date, "dd")}</p>
+            <p className="text-sm">{format(booking.date, "hh:mm")}</p>
 
         </div>
 
