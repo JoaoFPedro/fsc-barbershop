@@ -3,7 +3,7 @@ import { Booking, Prisma } from "@prisma/client";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import { Card, CardContent } from "./ui/card";
-import { format } from "date-fns";
+import { format, isFuture, isPast } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 
@@ -18,13 +18,16 @@ interface BookingItemProps{
 }
 
 const BookingItem = ({booking}: BookingItemProps) => {
+  const isBookingConfirmed = isFuture(booking.date)
   return (
     <Card>
-      <CardContent className="p-5 flex justify-between py-0">
-        <div className=" flex flex-col gap-2 py-5">
-          <Badge className="bg-[#221C3D] text-primary hover:bg-[#221C3D] w-fit">
-            {" "}
-            Confirmado
+      <CardContent className="py-2 flex  px-4">
+        <div className=" flex flex-col gap-2 py-5 flex-[3]">
+          <Badge variant={
+            isBookingConfirmed ? "default" : "secondary"
+          } className="  w-fit">
+            
+            {isBookingConfirmed? "Confirmado" : "Finalizado"}
           </Badge>
           <h2 className="font-bold"> {booking.service.name}</h2>
 
@@ -38,7 +41,7 @@ const BookingItem = ({booking}: BookingItemProps) => {
             <h3 className="text-sm">{booking.barbershop.name}</h3>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center px-3 border-solid border-l border-secondary">
+        <div className="flex flex-col items-center justify-center px-3 border-solid border-l border-secondary flex-1">
         <p className="text-sm capitalize">
                 {format(booking.date, "MMMM", {
                   locale: ptBR,
