@@ -10,29 +10,25 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export default async function Home() {
-
-
   const session = await getServerSession(authOptions);
 
-  const [barbershops,confirmedBookings] = await Promise.all([
+  const [barbershops, confirmedBookings] = await Promise.all([
     db.barbershop.findMany({}),
-   session?.user? db.booking.findMany({
-      where: {
-        userId: (session.user as any).id,
-        date: {
-          gte: new Date(),
-        },
-      },
-      include: {
-        service: true,
-        barbershop: true,
-      },
-      })
-    : Promise.resolve([]),
-
-  ])
-
-
+    session?.user
+      ? db.booking.findMany({
+          where: {
+            userId: (session.user as any).id,
+            date: {
+              gte: new Date(),
+            },
+          },
+          include: {
+            service: true,
+            barbershop: true,
+          },
+        })
+      : Promise.resolve([]),
+  ]);
 
   return (
     <div>
