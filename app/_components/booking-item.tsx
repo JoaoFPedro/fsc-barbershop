@@ -21,6 +21,8 @@ import { cancelBooking } from "../_actions/cancel-booking";
 import { toast } from "sonner";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { AlertDialog } from "@radix-ui/react-alert-dialog";
+import { AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./ui/alert-dialog";
 
 
 interface BookingItemProps {
@@ -157,9 +159,30 @@ const BookingItem = ({ booking }: BookingItemProps) => {
                       <Button  className="w-full" variant="secondary">Voltar</Button>
                       </SheetClose>
 
-                      <Button onClick={handleCancelClick} className="w-full" variant="destructive" disabled={!isBookingConfirmed || isDeleteLoading }>
+                      <AlertDialog>
+  <AlertDialogTrigger asChild>
+  <Button  className="w-full" variant="destructive" disabled={!isBookingConfirmed || isDeleteLoading }>
                       {isDeleteLoading && <Loader2 className="mr-2 h4 w-4 animate-spin "/>}
                         Cancelar Reserva</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent className="w-[90%]">
+    <AlertDialogHeader>
+      <AlertDialogTitle>Cancelar Reserva</AlertDialogTitle>
+      <AlertDialogDescription>
+        Tem certeza que deseja cancelar esse agendamento?
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter className="flex-row gap-3" >
+      <AlertDialogCancel className="w-full mt-0">Voltar</AlertDialogCancel>
+      <AlertDialogAction disabled={isDeleteLoading} className="w-full" onClick={handleCancelClick}>
+      {isDeleteLoading && <Loader2 className="mr-2 h4 w-4 animate-spin "/>}
+      Cancelar
+      </AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+
+
                     </SheetFooter>
         </div>
       </SheetContent>
