@@ -1,13 +1,13 @@
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import Image from "next/image";
 import Header from "../_components/header";
 import Search from "./_compoents/search";
 import BookingItem from "../_components/booking-item";
 import { db } from "../_lib/prisma";
 import BarberShopItem from "./_compoents/barbershop-item";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "../_lib/auth";
+
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
