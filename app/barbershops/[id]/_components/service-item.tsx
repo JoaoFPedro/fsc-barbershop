@@ -148,9 +148,9 @@ useEffect(() => {
 
   return (
     <Card>
-      <CardContent className="p-3">
+      <CardContent className="p-3 w-full">
         <div className="flex gap-4 items-center">
-          <div className="relative h-[110px] w-[110px]">
+          <div className="relative min-h-[110px] min-w-[110px] max-h-[110px] max-w-[110px]">
             <Image
               className="rounded-lg"
               src={service.imageUrl}
@@ -164,7 +164,7 @@ useEffect(() => {
             <h2 className="font-bold ">{service.name}</h2>
             <p className="text-sm text-gray-400">{service.description}</p>
 
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mt-3">
               <p className="text-primary font-bold ">
                 R${Number(service.price)}
               </p>
@@ -261,7 +261,7 @@ useEffect(() => {
                   </div>
                   <SheetFooter className="px-5">
                     <Button onClick={handleBookingSubmit} disabled={!hour || !date || submitIsLoading}>
-                      {submitIsLoading && <Loader2 className="mr-2 h4 w-4 animate-spin "/>}
+                      {submitIsLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin"/>}
                       Confirmar Reserva</Button>
                   </SheetFooter>
                 </SheetContent>
