@@ -226,7 +226,7 @@ useEffect(() => {
 
                   <div className="py-6 px-5 border-t border-solid border-secondary">
                     <Card>
-                      <CardContent className="p-3 gap-3 flex flex-col">
+                      <CardContent className="p-3 gap-3 flex flex-col overflow-x-auto">
                         <div className="flex justify-between">
                           <h2 className="font-bold">{service.name}</h2>
                           <h3 className="font-bold text-sm">
