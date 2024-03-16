@@ -23,7 +23,7 @@ const BarberShopItem = ({ barbershop }: BarberShopItemProps) => {
 
 
   return (
-    <Card className="min-w-[167px] max-w-[167px] rounded-2xl">
+    <Card className="min-w-full max-w-full rounded-2xl">
       <CardContent className="px-1 py-0">
         <div className="w-full relative h-[159px]">
            <div className="absolute top-2 left-2 z-50">
