@@ -1,5 +1,5 @@
 "use client";
-import {HomeIcon,    LogInIcon,  LogOutIcon,  MenuIcon,  UserIcon,} from "lucide-react";
+import { MenuIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import Image from "next/image";

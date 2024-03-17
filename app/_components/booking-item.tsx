@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Booking, Prisma } from "@prisma/client";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -22,8 +22,16 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { AlertDialog } from "@radix-ui/react-alert-dialog";
-import { AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./ui/alert-dialog";
-
+import {
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
 
 interface BookingItemProps {
   booking: Prisma.BookingGetPayload<{
@@ -34,28 +42,23 @@ interface BookingItemProps {
   }>;
 }
 
-
-
 const BookingItem = ({ booking }: BookingItemProps) => {
   const isBookingConfirmed = isFuture(booking.date);
 
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
 
-  const handleCancelClick =async () =>{
+  const handleCancelClick = async () => {
     setIsDeleteLoading(true);
     try {
-  
-      await cancelBooking(booking.id)
+      await cancelBooking(booking.id);
 
       toast.success("Reserva cancelada com sucesso");
-      
     } catch (error) {
-      console.log(error)
-    } finally{
-      setIsDeleteLoading(false)
+      console.log(error);
+    } finally {
+      setIsDeleteLoading(false);
     }
-  
-  }
+  };
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -108,82 +111,102 @@ const BookingItem = ({ booking }: BookingItemProps) => {
               <Card>
                 <CardContent className="p-3 flex gap-2">
                   <Avatar>
-                    <AvatarImage src={booking.barbershop.imageUrl}/>
+                    <AvatarImage src={booking.barbershop.imageUrl} />
                   </Avatar>
-                <div>
-                  <h2 className="font-bold">{booking.barbershop.name}</h2>
-                  <h3 className="text-xs overflow-hidden text-nowrap text-ellipsis">{booking.barbershop.address}</h3>
-                </div>
+                  <div>
+                    <h2 className="font-bold">{booking.barbershop.name}</h2>
+                    <h3 className="text-xs overflow-hidden text-nowrap text-ellipsis">
+                      {booking.barbershop.address}
+                    </h3>
+                  </div>
                 </CardContent>
               </Card>
             </div>
           </div>
-          <Badge variant={isBookingConfirmed ? "default" : "secondary"} className="w-fit my-3">
+          <Badge
+            variant={isBookingConfirmed ? "default" : "secondary"}
+            className="w-fit my-3"
+          >
             {isBookingConfirmed ? "Confirmado" : "Finalizado"}
           </Badge>
           <Card>
-                      <CardContent className="p-3 gap-3 flex flex-col">
-                        <div className="flex justify-between">
-                          <h2 className="font-bold">{booking.service.name}</h2>
-                          <h3 className="font-bold text-sm">
-                            R${Number(booking.service.price)}
-                          </h3>
-                        </div>
-                        
-                          <div className="flex justify-between">
-                            <h3 className="text-gray-400 text-sm">Data</h3>
-                            <h4 className="text-sm capitalize">
-                              {format(booking.date, "dd 'de' MMMM", {
-                                locale: ptBR,
-                              })}
-                            </h4>
-                          </div>
-                       
+            <CardContent className="p-3 gap-3 flex flex-col">
+              <div className="flex justify-between">
+                <h2 className="font-bold">{booking.service.name}</h2>
+                <h3 className="font-bold text-sm">
+                  R${Number(booking.service.price)}
+                </h3>
+              </div>
 
-                        
-                          <div className="flex justify-between">
-                            <h3 className="text-gray-400 text-sm">Horário</h3>
-                            <h4 className="text-sm capitalize">{format(booking.date, 'hh:mm')}</h4>
-                          </div>
-                       
-                        <div className="flex justify-between">
-                          <h3 className="text-gray-400 text-sm">Barbearia</h3>
-                          <h4 className="text-sm capitalize">
-                            {booking.barbershop.name}
-                          </h4>
-                        </div>
-                      </CardContent>
-                    </Card>
-                    <SheetFooter className="flex-row gap-3 mt-6">
-                      <SheetClose asChild>
-                      <Button  className="w-full" variant="secondary">Voltar</Button>
-                      </SheetClose>
+              <div className="flex justify-between">
+                <h3 className="text-gray-400 text-sm">Data</h3>
+                <h4 className="text-sm capitalize">
+                  {format(booking.date, "dd 'de' MMMM", {
+                    locale: ptBR,
+                  })}
+                </h4>
+              </div>
 
-                      <AlertDialog>
-  <AlertDialogTrigger asChild>
-  <Button  className="w-full" variant="destructive" disabled={!isBookingConfirmed || isDeleteLoading }>
-                      {isDeleteLoading && <Loader2 className="mr-2 h4 w-4 animate-spin "/>}
-                        Cancelar Reserva</Button>
-  </AlertDialogTrigger>
-  <AlertDialogContent className="w-[90%]">
-    <AlertDialogHeader>
-      <AlertDialogTitle>Cancelar Reserva</AlertDialogTitle>
-      <AlertDialogDescription>
-        Tem certeza que deseja cancelar esse agendamento?
-      </AlertDialogDescription>
-    </AlertDialogHeader>
-    <AlertDialogFooter className="flex-row gap-3" >
-      <AlertDialogCancel className="w-full mt-0">Voltar</AlertDialogCancel>
-      <AlertDialogAction disabled={isDeleteLoading} className="w-full" onClick={handleCancelClick}>
-      {isDeleteLoading && <Loader2 className="mr-2 h4 w-4 animate-spin "/>}
-      Cancelar
-      </AlertDialogAction>
-    </AlertDialogFooter>
-  </AlertDialogContent>
-</AlertDialog>
+              <div className="flex justify-between">
+                <h3 className="text-gray-400 text-sm">Horário</h3>
+                <h4 className="text-sm capitalize">
+                  {format(booking.date, "hh:mm")}
+                </h4>
+              </div>
 
+              <div className="flex justify-between">
+                <h3 className="text-gray-400 text-sm">Barbearia</h3>
+                <h4 className="text-sm capitalize">
+                  {booking.barbershop.name}
+                </h4>
+              </div>
+            </CardContent>
+          </Card>
+          <SheetFooter className="flex-row gap-3 mt-6">
+            <SheetClose asChild>
+              <Button className="w-full" variant="secondary">
+                Voltar
+              </Button>
+            </SheetClose>
 
-                    </SheetFooter>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  className="w-full"
+                  variant="destructive"
+                  disabled={!isBookingConfirmed || isDeleteLoading}
+                >
+                  {isDeleteLoading && (
+                    <Loader2 className="mr-2 h4 w-4 animate-spin " />
+                  )}
+                  Cancelar Reserva
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="w-[90%]">
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Cancelar Reserva</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Tem certeza que deseja cancelar esse agendamento?
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter className="flex-row gap-3">
+                  <AlertDialogCancel className="w-full mt-0">
+                    Voltar
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    disabled={isDeleteLoading}
+                    className="w-full"
+                    onClick={handleCancelClick}
+                  >
+                    {isDeleteLoading && (
+                      <Loader2 className="mr-2 h4 w-4 animate-spin " />
+                    )}
+                    Cancelar
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </SheetFooter>
         </div>
       </SheetContent>
     </Sheet>
