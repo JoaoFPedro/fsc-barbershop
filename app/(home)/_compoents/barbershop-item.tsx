@@ -4,6 +4,7 @@ import { Badge } from "@/app/_components/ui/badge";
 import { Button } from "@/app/_components/ui/button";
 import { Card, CardContent } from "@/app/_components/ui/card";
 import { Barbershop } from "@prisma/client";
+
 import { StarIcon } from "lucide-react";
 
 import Image from "next/image";
@@ -50,7 +51,7 @@ const BarberShopItem = ({ barbershop }: BarberShopItemProps) => {
             {barbershop.name}
           </h2>
           <p className="text-sm text-gray-400 overflow-hidden text-ellipsis text-nowrap">
-            {" "}
+            
             {barbershop.address}
           </p>
           <Button className="w-full mt-3" variant="secondary" onClick={handleBookingClick}>
